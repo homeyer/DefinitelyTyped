@@ -6,10 +6,10 @@
 
 import Promise = require('bluebird');
 
-declare function retry<T>(func: (param: T) => void, options?: retry.Options): Promise<T>;
+declare function retry<T, R>(func: (param: T) => R, options?: retry.Options<T>): Promise<R>;
 
 declare namespace retry {
-    interface Options {
+    interface Options<T> {
         interval?: number;
         backoff?: number;
         max_interval?: number;
@@ -18,7 +18,7 @@ declare namespace retry {
         predicate?: any;
         throw_original?: boolean;
         context?: any;
-        args?: any;
+        args?: T[];
     }
 
     class StopError extends Error {}
